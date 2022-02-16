@@ -3,16 +3,14 @@ package com.zchd.screen.record
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.zchd.screen.record.interfaces.MediaRecorderCallback
-import com.zchd.screen.record.interfaces.ScreenCaptureCallback
-import com.zchd.screen.record.utils.MediaProjectionHelper
+import com.zchd.screen.record.interfaces.RecorderCallback
+import com.zchd.screen.record.utils.RecorderManager
 import java.io.File
 
 
@@ -29,19 +27,10 @@ class MainActivity : AppCompatActivity() {
                 1
             )
         }
-        MediaProjectionHelper.instance.startService(this)
+        RecorderManager.INSTANCE.startService(this)
         findViewById<AppCompatButton>(R.id.btn_start).setOnClickListener {
-            MediaProjectionHelper.instance.capture(object :ScreenCaptureCallback{
-                override fun onSuccess(bitmap: Bitmap?) {
-                    super.onSuccess(bitmap)
-                }
-
-                override fun onFail() {
-                    super.onFail()
-                }
-            })
-            MediaProjectionHelper.instance
-                .startMediaRecorder(object : MediaRecorderCallback {
+            RecorderManager.INSTANCE
+                .startMediaRecorder(this, object : RecorderCallback {
 
                     override fun onSuccess(file: File?) {
                         super.onSuccess(file)
@@ -60,27 +49,27 @@ class MainActivity : AppCompatActivity() {
                 })
         }
         findViewById<AppCompatButton>(R.id.btn_pause).setOnClickListener {
-            MediaProjectionHelper.instance.pauseMediaRecorder()
+            RecorderManager.INSTANCE.pauseMediaRecorder()
 
         }
         findViewById<AppCompatButton>(R.id.btn_resume).setOnClickListener {
-            MediaProjectionHelper.instance.resumeMediaRecorder()
+            RecorderManager.INSTANCE.resumeMediaRecorder()
 
         }
         findViewById<AppCompatButton>(R.id.btn_close).setOnClickListener {
-            MediaProjectionHelper.instance.stopMediaRecorder()
+            RecorderManager.INSTANCE.stopMediaRecorder()
 
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        MediaProjectionHelper.instance
-            .createVirtualDisplay(requestCode, resultCode, data, true, true)
+        RecorderManager.INSTANCE
+            .createVirtualDisplay(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
-        MediaProjectionHelper.instance.stopService(this)
+        RecorderManager.INSTANCE.stopService(this)
         super.onDestroy()
     }
 

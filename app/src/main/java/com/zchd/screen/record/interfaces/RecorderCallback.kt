@@ -8,16 +8,7 @@ import java.io.File
  * @Date: 2022/2/16:10:58
  * @Description:录屏回调
  */
-interface MediaRecorderCallback {
-    /**
-     * 成功
-     *
-     * @param file 录制后的File
-     */
+interface RecorderCallback {
     fun onSuccess(file: File?) {}
-
-    /**
-     * 失败
-     */
     fun onFail() {}
 }
