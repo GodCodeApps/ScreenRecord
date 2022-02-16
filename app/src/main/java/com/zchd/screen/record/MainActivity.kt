@@ -3,6 +3,7 @@ package com.zchd.screen.record
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.zchd.screen.record.interfaces.MediaRecorderCallback
+import com.zchd.screen.record.interfaces.ScreenCaptureCallback
 import com.zchd.screen.record.utils.MediaProjectionHelper
 import java.io.File
 
@@ -29,6 +31,15 @@ class MainActivity : AppCompatActivity() {
         }
         MediaProjectionHelper.instance.startService(this)
         findViewById<AppCompatButton>(R.id.btn_start).setOnClickListener {
+            MediaProjectionHelper.instance.capture(object :ScreenCaptureCallback{
+                override fun onSuccess(bitmap: Bitmap?) {
+                    super.onSuccess(bitmap)
+                }
+
+                override fun onFail() {
+                    super.onFail()
+                }
+            })
             MediaProjectionHelper.instance
                 .startMediaRecorder(object : MediaRecorderCallback {
 

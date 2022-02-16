@@ -29,10 +29,6 @@
             android:name=".service.ScreenCapService"
             android:enabled="true"
             android:foregroundServiceType="mediaProjection" />
-<!--        <service-->
-<!--            android:name=".service.ScreenCapService"-->
-<!--            android:enabled="true"-->
-<!--            android:foregroundServiceType="mediaProjection" />-->
     </application>
 
 </manifest>
