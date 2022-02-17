@@ -18,8 +18,8 @@ import android.util.DisplayMetrics
 import com.zchd.screen.record.interfaces.IRecorderBinder
 import com.zchd.screen.record.interfaces.RecorderCallback
 import com.zchd.screen.record.utils.FileUtils
-import com.zchd.screen.record.utils.RecorderManager
 import com.zchd.screen.record.utils.NotificationHelper
+import com.zchd.screen.record.utils.RecorderManager
 import java.io.File
 
 /**
@@ -45,13 +45,14 @@ class RecorderService : Service() {
             createVirtualDisplay(resultCode, data)
         }
 
-        override fun start(activity: Activity, callback: RecorderCallback) {
+        override fun start(context: Context, callback: RecorderCallback) {
             displayMetrics = DisplayMetrics()
-            activity.windowManager.defaultDisplay.getRealMetrics(displayMetrics)
+            context as Activity
+            context.windowManager.defaultDisplay.getRealMetrics(displayMetrics)
             if (mediaProjectionManager == null) {
                 mediaProjectionManager =
-                    activity.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-                activity.startActivityForResult(
+                    context.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+                context.startActivityForResult(
                     mediaProjectionManager?.createScreenCaptureIntent(),
                     RecorderManager.REQUEST_CODE
                 )

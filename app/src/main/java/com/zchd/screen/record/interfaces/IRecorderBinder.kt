@@ -1,6 +1,6 @@
 package com.zchd.screen.record.interfaces
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 
 
@@ -12,7 +12,7 @@ import android.content.Intent
  */
 interface IRecorderBinder {
     fun create(resultCode: Int, data: Intent?) {}
-    fun start(activity: Activity, recorderCallback: RecorderCallback) {}
+    fun start(context: Context, recorderCallback: RecorderCallback) {}
     fun pause() {}
     fun resume() {}
     fun stop() {}

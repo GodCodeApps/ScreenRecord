@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/zchd/work/code/ScreenRecord/app/src/main/res/drawable/shape_rec_r_8_c_ffffff.xml" value="0.144" />
+        <entry key="..\:/zchd/work/code/ScreenRecord/app/src/main/res/drawable/shape_recont_r_15_c_adad.xml" value="0.2515" />
         <entry key="..\:/zchd/work/code/ScreenRecord/app/src/main/res/layout/activity_main.xml" value="0.24895833333333334" />
+        <entry key="..\:/zchd/work/code/ScreenRecord/app/src/main/res/layout/float_ball_layout.xml" value="0.67" />
+        <entry key="..\:/zchd/work/code/ScreenRecord/app/src/main/res/layout/float_center_layout.xml" value="0.30932971014492755" />
+        <entry key="..\:/zchd/work/code/ScreenRecord/app/src/main/res/layout/float_layout.xml" value="0.2033514492753623" />
       </map>
     </option>
   </component>

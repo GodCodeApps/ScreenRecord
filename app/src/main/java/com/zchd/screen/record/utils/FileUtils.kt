@@ -4,6 +4,9 @@ import android.content.Context
 import android.os.Environment
 import android.text.TextUtils
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,7 +19,8 @@ import java.util.*
 class FileUtils {
     companion object {
         private val date = Date()
-
+         val recordingPath =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath + "/camera/RecordingSdk" + System.currentTimeMillis() + ".mp4"
         private val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.getDefault())
 
         /**
@@ -64,5 +68,64 @@ class FileUtils {
             val dir = Environment.DIRECTORY_MOVIES
             return File(getCacheDir(context), dir)
         }
+
+        fun createFile(mimeType: String): File? {
+            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HH_mm_ss").format(Date())
+            val fileName = "camera_" + timeStamp + "_"
+            val storageDir: File =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            var file: File? = null
+            try {
+                file = File.createTempFile(fileName, mimeType, storageDir)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            file?.mkdirs()
+            return file
+        }
+
+        fun fileCopy(oldFilePath: String?, newFilePath: String?): String? {
+            val file = File(oldFilePath)
+            if (file == null || !file.exists()) {
+                return ""
+            }
+            val newFile = File(newFilePath)
+            if (newFile.exists()) {
+                newFile.delete()
+            }
+            try {
+                newFile.createNewFile()
+            } catch (e1: IOException) {
+                return ""
+            }
+            var input: FileInputStream? = null
+            var output: FileOutputStream? = null
+            return try {
+                input = FileInputStream(file)
+                output = FileOutputStream(newFile)
+                val buffer = ByteArray(4096)
+                var n = 0
+                while (-1 != input.read(buffer).also { n = it }) {
+                    output.write(buffer, 0, n)
+                }
+                newFile.path
+            } catch (ioe: Exception) {
+                ""
+            } finally {
+                if (output != null) {
+                    try {
+                        output.close()
+                    } catch (e: IOException) {
+                    }
+                }
+                if (input != null) {
+                    try {
+                        input.close()
+                    } catch (e: IOException) {
+                    }
+                }
+            }
+        }
     }
 }
+

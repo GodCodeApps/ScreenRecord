@@ -57,8 +57,8 @@ class RecorderManager {
     /**
      * 开始 屏幕录制
      */
-    fun startMediaRecorder(activity: Activity, callback: RecorderCallback) {
-        serviceConnection?.recorderBinder?.start(activity, callback)
+    fun startMediaRecorder(context: Context, callback: RecorderCallback) {
+        serviceConnection?.recorderBinder?.start(context, callback)
     }
 
     /**
