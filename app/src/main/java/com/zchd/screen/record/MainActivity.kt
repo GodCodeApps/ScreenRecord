@@ -1,9 +1,13 @@
 package com.zchd.screen.record
 
 import android.Manifest
+import android.app.Service
 import android.content.Intent
+import android.graphics.PixelFormat
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
@@ -17,6 +21,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        FloatDragView(this)
+
+
 
         ActivityCompat.requestPermissions(
             this,
