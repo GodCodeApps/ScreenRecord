@@ -19,8 +19,8 @@ import java.util.*
 class FileUtils {
     companion object {
         private val date = Date()
-         val recordingPath =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath + "/camera/RecordingSdk" + System.currentTimeMillis() + ".mp4"
+        val recordingPath =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath + "/camera/RecordingSdk"
         private val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.getDefault())
 
         /**

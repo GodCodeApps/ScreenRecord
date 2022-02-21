@@ -1,15 +1,15 @@
 package com.zchd.screen.record.utils
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.app.Service
 import android.content.Context
 import android.graphics.PixelFormat
 import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.CountDownTimer
-import android.util.AttributeSet
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.WindowManager
 import android.view.animation.RotateAnimation
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -28,7 +28,6 @@ import java.io.File
 object FloatLayout {
     private var mLayoutParams: WindowManager.LayoutParams? = null
     private var mFloatBallView: View? = null
-    private var mFloatCenterView: View? = null
     private var status: Int = 0
     private var mMode: Int = 0//0正常录制，1回录
     private var mIvMenu: ImageView? = null
@@ -72,15 +71,12 @@ object FloatLayout {
         val windowManager = context.getSystemService(Service.WINDOW_SERVICE) as WindowManager
         var inflater = context.getSystemService(Service.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         mFloatBallView = inflater.inflate(R.layout.float_ball_layout, null)
-        mFloatCenterView = inflater.inflate(R.layout.float_center_layout, null)
         mLayoutParams?.gravity = Gravity.TOP or Gravity.START
         mFloatBallView?.visibility = View.GONE
         windowManager.addView(mFloatBallView, mLayoutParams)
         mLayoutParams?.gravity = Gravity.CENTER
         mLayoutParams?.width = WindowManager.LayoutParams.MATCH_PARENT
         mLayoutParams?.height = WindowManager.LayoutParams.MATCH_PARENT
-        mFloatCenterView?.visibility = View.VISIBLE
-        windowManager.addView(mFloatCenterView, mLayoutParams)
         mIvMenu = mFloatBallView?.findViewById<ImageView>(R.id.iv_menu)
         ivRecordingStatus = mFloatBallView?.findViewById<ImageView>(R.id.iv_recording_status)
         tvRecordingTime = mFloatBallView?.findViewById<TextView>(R.id.tv_recording_time)
@@ -156,12 +152,6 @@ object FloatLayout {
             }
 
         }
-        reverseRecording = mFloatCenterView?.findViewById<FrameLayout>(R.id.card_reverse_recording)
-        normalRecording = mFloatCenterView?.findViewById<FrameLayout>(R.id.card_normal_recording)
-        var centerRootView = mFloatCenterView?.findViewById<FrameLayout>(R.id.root)
-        centerRootView?.setOnClickListener {
-            showFloatBall()
-        }
         reverseRecording?.setOnClickListener {
             mMode = 1
             showFloatBall()
@@ -176,12 +166,10 @@ object FloatLayout {
 
     private fun showFloatBall() {
         mFloatBallView?.visibility = View.VISIBLE
-        mFloatCenterView?.visibility = View.GONE
     }
 
     private fun showFloatCenter() {
         mFloatBallView?.visibility = View.GONE
-        mFloatCenterView?.visibility = View.VISIBLE
     }
 
     private fun startTimer() {
